@@ -10,4 +10,4 @@ It's up to you to make sure the program you supply writes to the correct
 file. The reason this is not done automatically is so you have the flexibility
 to change the filename or even not write it at all, if you decide not to.
 
-You call it like ```filtdir srcdir destdir your_program```
+You call it like `filtdir srcdir destdir your_program'
