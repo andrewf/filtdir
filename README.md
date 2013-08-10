@@ -25,3 +25,16 @@ want to use a non-existent name at first and delete it afterwards.
 I took care to handle spaces in filenames, but colons or regex special
 chars in directory names are probably bad news. If it gets on my nerves,
 I'll probably rewrite the thing in python.
+
+To finish off, here's my music-conversion script. The implementation of `flac2mp3`
+is left as an exercise for the reader:
+```bash
+#!/usr/bin/env bash
+
+if [[ "$2" =~ \.flac$ ]]; then
+    mp3name=$(echo $2 | sed s/flac$/mp3/)
+    flac2mp3 "$1/$2" "$3/$mp3name"
+else
+    cp "$1/$2" "$3/$2"
+fi
+```
