@@ -16,7 +16,7 @@ sedcmd="s:^$srcdir:$outputdir:"
 while IFS= read -d $'\0' -r srcfile; do
     currdir=$(echo $srcfile | sed ${sedcmd})
     #echo making dir "${currdir}"
-    mkdir -p ${currdir}
+    mkdir -p "${currdir}"
 done < <(find $srcdir -type d -print0)
 
 while IFS= read -d $'\0' -r srcfile; do
