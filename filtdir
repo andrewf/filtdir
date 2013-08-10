@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+srcdir="$1"
+outputdir="$2"
+usercommand="$3"
+
+# strip off trailing slashes on dir names
+# note that this particular sed expression won't support :'s in filenames
+# regex special chars like . are probably bad news too.
+srcdir=$(echo ${srcdir} | sed 's:/$::' )
+outputdir=$(echo ${outputdir} | sed 's:/$::' )
+
+# create the output directories
+sedcmd="s:^$srcdir:$outputdir:"
+#echo "sedcmd ${sedcmd}"
+while IFS= read -d $'\0' -r srcfile; do
+    currdir=$(echo $srcfile | sed ${sedcmd})
+    #echo making dir "${currdir}"
+    mkdir -p ${currdir}
+done < <(find $srcdir -type d -print0)
+
+while IFS= read -d $'\0' -r srcfile; do
+    currdir=$(dirname "${srcfile}")
+    srcbasename=$(basename "${srcfile}")
+    destdir=$(echo $currdir | sed ${sedcmd})
+    #echo "process ${srcfile}"
+    #echo "  ${destdir}"
+    $usercommand "$currdir" "$srcbasename" "$destdir"
+done < <(find $srcdir -type f -print0)

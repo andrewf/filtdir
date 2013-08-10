@@ -1,0 +1,13 @@
+Filtdir filters directories. That is, you give it a source directory and an
+output directory, and for each file in the source, it runs an external
+program you specify with three arguments:
+
+ - $1: The the source directory
+ - $2: The base file name of the source file
+ - $3: The the output directory
+
+It's up to you to make sure the program you supply writes to the correct
+file. The reason this is not done automatically is so you have the flexibility
+to change the filename or even not write it at all, if you decide not to.
+
+You call it like ```filtdir srcdir destdir your_program```
