@@ -33,8 +33,18 @@ is left as an exercise for the reader:
 
 if [[ "$2" =~ \.flac$ ]]; then
     mp3name=$(echo $2 | sed s/flac$/mp3/)
+    # exit if we don't actually need to update the output
+    if ! [[ "$1/$2" -nt "$3/$mp3name" ]]; then
+        exit
+    fi;
+    echo "deflaccing $1/$2"
     flac2mp3 "$1/$2" "$3/$mp3name"
 else
+    # exit if we don't actually need to update the output
+    if ! [[ "$1/$2" -nt "$3/$2" ]]; then
+        exit
+    fi;
+    echo "copying $1/$2"
     cp "$1/$2" "$3/$2"
 fi
 ```
